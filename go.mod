@@ -1,4 +1,4 @@
-module conf
+module confiture
 
 go 1.18
 
