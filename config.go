@@ -1,8 +1,7 @@
-package confiture
+package conf
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v3"
 	"log"
 	"os"
 	"path"
