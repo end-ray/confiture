@@ -1,4 +1,4 @@
-module confiture
+module github.com/end-ray/confiture
 
 go 1.18
 
