@@ -46,7 +46,7 @@ func initHome() {
 func initConfig() {
 	_, err := os.Stat(path.Join(home, configFile))
 
-	if err == nil { // если configFile не существует
+	if os.IsNotExist(err) { // если configFile не существует
 		createConfig()
 	} else { // если configFile существует
 
