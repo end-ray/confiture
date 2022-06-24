@@ -34,7 +34,7 @@ type RayLog struct {
 var config Configuration
 var home string
 
-func init() {
+func InitConfiture() {
 	initHome()
 	initConfig()
 }
