@@ -15,9 +15,9 @@ const (
 )
 
 type Configuration struct {
-	Home   string `yaml:"Home"`
-	Log    RayLog `yaml:"Log"`
-	Sqlite Sqlite `yaml:"SQLite"`
+	Home   string   `yaml:"Home"`
+	Log    AlertLog `yaml:"AlertLog"`
+	Sqlite Sqlite   `yaml:"SQLite"`
 }
 
 type Sqlite struct {
@@ -26,7 +26,7 @@ type Sqlite struct {
 	DbFile   string `yaml:"dbFile"`
 }
 
-type RayLog struct {
+type AlertLog struct {
 	LogPath  string `yaml:"logPath"`
 	LogLevel uint8  `yaml:"logLevel"`
 }
@@ -58,6 +58,9 @@ func createConfig() {
 
 	file, err := os.OpenFile(path.Join(home, configFile), os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0660)
 	defer file.Close()
+
+	//Домашний каталог
+	config.Home = home
 
 	// Параметры логирования по умолчанию
 	config.Log.LogPath = path.Join(home, "log", alertLog) //назначаем переменной значение
