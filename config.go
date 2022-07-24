@@ -17,18 +17,23 @@ const (
 type Configuration struct {
 	Home   string   `yaml:"Home"`
 	Log    AlertLog `yaml:"AlertLog"`
+	Web    Web      `yaml:"Web"`
 	Sqlite Sqlite   `yaml:"SQLite"`
+}
+
+type AlertLog struct {
+	LogPath  string `yaml:"logPath"`
+	LogLevel uint8  `yaml:"logLevel"`
+}
+
+type Web struct {
+	Port string `yaml:"port"`
 }
 
 type Sqlite struct {
 	DbDriver string `yaml:"dbDriver"`
 	DbPatch  string `yaml:"dbPatch"`
 	DbFile   string `yaml:"dbFile"`
-}
-
-type AlertLog struct {
-	LogPath  string `yaml:"logPath"`
-	LogLevel uint8  `yaml:"logLevel"`
 }
 
 var config Configuration
@@ -66,6 +71,9 @@ func createConfig() {
 	config.Log.LogPath = path.Join(home, "log", alertLog) //назначаем переменной значение
 	config.Log.LogLevel = 4
 	//initRayLog()
+
+	// Параметры Web по умолчанию
+	config.Web.Port = "8000"
 
 	// Параметры SQLite по умолчанию
 	config.Sqlite.DbDriver = "sqlite3"
