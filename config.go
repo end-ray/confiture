@@ -95,7 +95,7 @@ func createStructure() {
 	}
 }
 
-func ReadConfig() (conf Configuration) {
+func Read() (conf Configuration) {
 	file, err := os.ReadFile(path.Join(home, configFile))
 	if err != nil {
 		log.Fatal(err)
@@ -107,4 +107,9 @@ func ReadConfig() (conf Configuration) {
 		log.Fatal(err)
 	}
 	return conf
+}
+
+func Write() {
+	data, _ := yaml.Marshal(&config)
+	os.WriteFile(path.Join(home, configFile), data, 0660)
 }
