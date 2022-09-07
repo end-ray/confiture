@@ -75,7 +75,7 @@ func createConfig() {
 
 	// Параметры Web по умолчанию
 	config.Web.Port = "8000"
-	config.Web.Assets = path.Join(home, "assets", "templates", "login.html")
+	config.Web.Assets = path.Join(home, "assets")
 
 	// Параметры SQLite по умолчанию
 	config.Sqlite.DbDriver = "sqlite3"
