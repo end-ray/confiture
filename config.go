@@ -46,7 +46,18 @@ func InitConfiture() {
 }
 
 func initHome() {
-	home, _ = filepath.Abs(filepath.Dir(os.Args[0])) // определяем абсолютный путь запущенного файла
+	exePath, err := os.Executable() // Получаем абсолютный путь к текущему исполняемому файлу
+	if err != nil {
+		fmt.Println("Ошибка получения пути к исполняемому файлу:", err)
+		return
+	}
+
+	dirPath := filepath.Dir(exePath) // определяем абсолютный путь запущенного файла
+	//exeName := filepath.Base(exePath)	// Получаем имя файла из пути
+
+	home = dirPath
+
+	//home, _ = filepath.Abs(filepath.Dir(os.Args[0]))
 }
 
 func initConfig() {
@@ -88,19 +99,6 @@ func createConfig() {
 	}
 
 	file.Write(data)
-}
-
-func createStructure() {
-	err := os.MkdirAll(path.Join(home, "log"), 0775)                //если не существует, создаем каталог "log"
-	err = os.MkdirAll(path.Join(home, "assets"), 0775)              //если не существует, создаем каталог "Assets"
-	err = os.MkdirAll(path.Join(home, "assets", "templates"), 0775) //если не существует, создаем каталог "Templates"
-	err = os.MkdirAll(path.Join(home, "assets", "css"), 0775)       //если не существует, создаем каталог "CSS"
-	err = os.MkdirAll(path.Join(home, "assets", "js"), 0775)        //если не существует, создаем каталог "JavaScripts"
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
 }
 
 func Read() (conf Configuration) {
