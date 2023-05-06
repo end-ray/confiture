@@ -19,8 +19,14 @@ var home string
 
 func InitConfiture(targetName string) {
 	dirPath, exeName := initHome()
+
+	dirName := filepath.Base(dirPath)
+	if dirName == "bin" {
+		return
+	}
+
 	initStructure(dirPath, exeName, targetName)
-	initConfig()
+	initConfig(dirPath)
 }
 
 func initHome() (string, string) {

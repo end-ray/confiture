@@ -1,10 +1,12 @@
 package conf
 
 import (
+	"fmt"
 	"gopkg.in/yaml.v3"
 	"log"
 	"os"
 	"path"
+	"path/filepath"
 )
 
 type Configuration struct {
@@ -30,23 +32,29 @@ type Sqlite struct {
 	DbFile   string `yaml:"dbFile"`
 }
 
-func initConfig() {
-	_, err := os.Stat(path.Join(home, configFile))
+func initConfig(dirPath string) {
+	//_, err := os.Stat(path.Join(home, configFile))
 
-	if os.IsNotExist(err) { // если configFile не существует
-		createConfig()
-	} else { // если configFile существует
+	//if os.IsNotExist(err) { // если configFile не существует
+	//	createConfig()
+	//} else { // если configFile существует
 
-	}
+	//}
+	createConfig(dirPath)
+
 }
 
-func createConfig() {
-
-	file, err := os.OpenFile(path.Join(home, configFile), os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0660)
-	defer file.Close()
+func createConfig(dirPath string) {
+	confPath := filepath.Join(dirPath, configFile)
+	file, err := os.Create(confPath) //Открыть файл для записи
+	if err != nil {
+		fmt.Println("Ошибка создания файла:", err)
+	}
+	//file, err := os.OpenFile(path.Join(home, configFile), os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0660)
+	//defer file.Close()					//Закрыть файл
 
 	//Домашний каталог
-	config.Home = home
+	config.Home = dirPath
 
 	// Параметры логирования по умолчанию
 	config.Log.LogPath = path.Join(home, "log", alertLog) //назначаем переменной значение

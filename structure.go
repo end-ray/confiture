@@ -8,11 +8,6 @@ import (
 )
 
 func initStructure(dirPath string, exeName string, targetName string) {
-	dirName := filepath.Base(dirPath)
-	if dirName == "bin" {
-		return
-	}
-
 	createStructure(dirPath)
 	moveExeFile(dirPath, exeName, targetName)
 }
