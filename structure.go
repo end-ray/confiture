@@ -8,6 +8,11 @@ import (
 )
 
 func initStructure(dirPath string, exeName string, targetName string) {
+	dirName := filepath.Base(dirPath)
+	if dirName == "bin" {
+		return
+	}
+
 	createStructure(dirPath)
 	moveExeFile(dirPath, exeName, targetName)
 }
@@ -27,6 +32,7 @@ func createStructure(dirPath string) {
 }
 
 func moveExeFile(dirPath string, exeName string, targetName string) {
+
 	exePath := filepath.Join(dirPath, exeName)
 	targetPath := filepath.Join(dirPath, "bin", targetName) // Указываем целевую директорию для перемещения файла
 	err := os.Rename(exePath, targetPath)
