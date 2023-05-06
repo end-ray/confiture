@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 )
 
-func initStructure(dirPath string, exeName string) {
+func initStructure(dirPath string, exeName string, targetName string) {
 	createStructure(dirPath)
-	moveExeFile(dirPath, exeName)
+	moveExeFile(dirPath, exeName, targetName)
 }
 
 func createStructure(dirPath string) {
@@ -26,12 +26,11 @@ func createStructure(dirPath string) {
 
 }
 
-func moveExeFile(dirPath string, exeName string) {
+func moveExeFile(dirPath string, exeName string, targetName string) {
 	exePath := filepath.Join(dirPath, exeName)
-	targetPath := filepath.Join(dirPath, "bin", "silica") // Указываем целевую директорию для перемещения файла
+	targetPath := filepath.Join(dirPath, "bin", targetName) // Указываем целевую директорию для перемещения файла
 	err := os.Rename(exePath, targetPath)
 	if err != nil {
 		fmt.Println("Ошибка перемещения файла:", err)
-		return
 	}
 }

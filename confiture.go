@@ -17,9 +17,9 @@ const (
 var config Configuration
 var home string
 
-func InitConfiture() {
+func InitConfiture(targetName string) {
 	dirPath, exeName := initHome()
-	initStructure(dirPath, exeName)
+	initStructure(dirPath, exeName, targetName)
 	initConfig()
 }
 
