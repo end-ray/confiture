@@ -41,23 +41,26 @@ var config Configuration
 var home string
 
 func InitConfiture() {
-	initHome()
+	dirPath, exeName := initHome()
+	initStructure(dirPath, exeName)
 	initConfig()
 }
 
-func initHome() {
+func initHome() (string, string) {
 	exePath, err := os.Executable() // Получаем абсолютный путь к текущему исполняемому файлу
 	if err != nil {
 		fmt.Println("Ошибка получения пути к исполняемому файлу:", err)
-		return
+
 	}
 
-	dirPath := filepath.Dir(exePath) // определяем абсолютный путь запущенного файла
-	//exeName := filepath.Base(exePath)	// Получаем имя файла из пути
+	dirPath := filepath.Dir(exePath)  // определяем абсолютный путь запущенного файла
+	exeName := filepath.Base(exePath) // Получаем имя файла из пути
 
 	home = dirPath
 
 	//home, _ = filepath.Abs(filepath.Dir(os.Args[0]))
+
+	return dirPath, exeName
 }
 
 func initConfig() {
@@ -71,7 +74,6 @@ func initConfig() {
 }
 
 func createConfig() {
-	createStructure()
 
 	file, err := os.OpenFile(path.Join(home, configFile), os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0660)
 	defer file.Close()
