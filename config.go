@@ -50,20 +50,18 @@ func createConfig(dirPath string) {
 	if err != nil {
 		fmt.Println("Ошибка создания файла:", err)
 	}
-	//file, err := os.OpenFile(path.Join(home, configFile), os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0660)
-	//defer file.Close()					//Закрыть файл
 
 	//Домашний каталог
 	config.Home = dirPath
 
 	// Параметры логирования по умолчанию
-	config.Log.LogPath = path.Join(home, "log", alertLog) //назначаем переменной значение
+	config.Log.LogPath = path.Join("$Home", "log", alertLog) //назначаем переменной значение
 	config.Log.LogLevel = 4
 	//initRayLog()
 
 	// Параметры Web по умолчанию
 	config.Web.Port = "8000"
-	config.Web.Assets = path.Join(home, "assets")
+	config.Web.Assets = path.Join("$Home", "assets")
 
 	// Параметры SQLite по умолчанию
 	config.Sqlite.DbDriver = "sqlite3"
