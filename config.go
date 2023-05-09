@@ -50,13 +50,13 @@ func newConfig(dirPath string) *Config {
 
 	config.Server.Address = "0.0.0.0"
 	config.Server.Port = "8000"
-	config.Server.Assets = path.Join("$Home", "assets")
+	config.Server.Assets = path.Join("$home", "assets")
 
-	config.Log.LogPath = path.Join("$Home", "log", alertLog) //назначаем переменной значение
+	config.Log.LogPath = path.Join("$home", "log", alertLog) //назначаем переменной значение
 	config.Log.LogLevel = 4
 
 	config.Sqlite.DbDriver = "sqlite3"
-	config.Sqlite.DbPatch = "$Home"
+	config.Sqlite.DbPatch = "$home"
 	config.Sqlite.DbFile = "storage.db"
 
 	return &config
@@ -68,7 +68,7 @@ func Write(config *Config) {
 		panic(err)
 	}
 
-	err = os.WriteFile(configFile, data, 0660)
+	err = os.WriteFile(path.Join(config.Home, configFile), data, 0660)
 	if err != nil {
 		panic(err)
 	}
