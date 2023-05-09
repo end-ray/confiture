@@ -14,12 +14,13 @@ const (
 	alertLog   = "alert.log"
 )
 
-var config Configuration
+// var config Config
 var home string
 
 func InitConfiture(targetName string) {
 	dirPath, exeName := initHome()
 
+	//Проверка находится ли исполняемый файл в каталоге bin
 	dirName := filepath.Base(dirPath)
 	if dirName == "bin" {
 		return
@@ -42,7 +43,7 @@ func initHome() (string, string) {
 	return dirPath, exeName
 }
 
-func Read() (conf Configuration) {
+func Read() (conf Config) {
 	file, err := os.ReadFile(path.Join(home, configFile))
 	if err != nil {
 		log.Fatal(err)
@@ -56,7 +57,7 @@ func Read() (conf Configuration) {
 	return conf
 }
 
-func Write() {
-	data, _ := yaml.Marshal(&config)
-	os.WriteFile(path.Join(home, configFile), data, 0660)
-}
+//func Write() {
+//	data, _ := yaml.Marshal(&config)
+//	os.WriteFile(path.Join(home, configFile), data, 0660)
+//}
