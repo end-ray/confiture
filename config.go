@@ -31,15 +31,6 @@ type Sqlite struct {
 }
 
 func initConfig(dirPath string) {
-	//_, err := os.Stat(path.Join(home, configFile))
-
-	//if os.IsNotExist(err) { // если configFile не существует
-	//	createConfig()
-	//} else { // если configFile существует
-
-	//}
-	//createConfig(dirPath)
-
 	Write(newConfig(dirPath))
 }
 
@@ -73,35 +64,3 @@ func Write(config *Config) {
 		panic(err)
 	}
 }
-
-//func createConfig(dirPath string) {
-//	confPath := filepath.Join(dirPath, configFile)
-//	file, err := os.Create(confPath) //Открыть файл для записи
-//	if err != nil {
-//		fmt.Println("Ошибка создания файла:", err)
-//	}
-//
-//	//Домашний каталог
-//	config.Home = dirPath
-//
-//	// Параметры логирования по умолчанию
-//	config.Log.LogPath = path.Join("$Home", "log", alertLog) //назначаем переменной значение
-//	config.Log.LogLevel = 4
-//	//initRayLog()
-//
-//	// Параметры Web по умолчанию
-//	config.Server.Port = "8000"
-//	config.Server.Assets = path.Join("$Home", "assets")
-//
-//	// Параметры SQLite по умолчанию
-//	config.Sqlite.DbDriver = "sqlite3"
-//	config.Sqlite.DbPatch = home
-//	config.Sqlite.DbFile = "storage.db"
-//
-//	data, err := yaml.Marshal(&config)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//
-//	file.Write(data)
-//}

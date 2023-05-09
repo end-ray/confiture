@@ -56,8 +56,3 @@ func Read() (conf Config) {
 	}
 	return conf
 }
-
-//func Write() {
-//	data, _ := yaml.Marshal(&config)
-//	os.WriteFile(path.Join(home, configFile), data, 0660)
-//}
