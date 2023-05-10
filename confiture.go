@@ -11,17 +11,19 @@ const (
 	alertLog   = "alert.log"
 )
 
-func InitConfiture(targetName string) {
+func InitConfiture(targetName string) *string {
 	dirPath, exeName := initHome()
 
 	//Проверка находится ли исполняемый файл в каталоге bin
 	dirName := filepath.Base(dirPath)
 	if dirName == "bin" {
-		return
+		return &dirPath
 	}
 
 	initStructure(dirPath, exeName, targetName)
 	initConfig(dirPath)
+
+	return &dirPath
 }
 
 func initHome() (string, string) {
