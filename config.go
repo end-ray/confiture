@@ -44,7 +44,7 @@ func newConfig(dirPath string) *Config {
 	config.Home = dirPath
 
 	config.Server.Address = "0.0.0.0"
-	config.Server.Port = "8000"
+	config.Server.Port = "8443"
 	config.Server.Assets = path.Join("$home", "assets")
 
 	config.Log.LogPath = path.Join("$home", "log", alertLog) //назначаем переменной значение
