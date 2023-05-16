@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"fmt"
 	"gopkg.in/yaml.v3"
 	"log"
 	"os"
@@ -73,16 +74,17 @@ func Write(config *Config) {
 
 func Read(dirPath string) Config {
 	var config Config
+	confPath := path.Join(dirPath, configFile)
 
-	configData, err := os.ReadFile(path.Join(dirPath, configFile))
+	configData, err := os.ReadFile(confPath)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// parse the YAML stored in the byte slice into the struct
-	err = yaml.Unmarshal(configData, config)
+	err = yaml.Unmarshal(configData, &config)
 	if err != nil {
-		log.Fatal(err)
+		panic(fmt.Errorf("failed to unmarshal config data: %w", err))
 	}
 	return config
 }
