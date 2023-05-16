@@ -15,6 +15,7 @@ func initStructure(dirPath string, exeName string, targetName string) {
 func createStructure(dirPath string) {
 	err := os.MkdirAll(path.Join(dirPath, "bin"), 0775)                //если не существует, создаем каталог "bin"
 	err = os.MkdirAll(path.Join(dirPath, "log"), 0775)                 //если не существует, создаем каталог "log"
+	err = os.MkdirAll(path.Join(dirPath, "pki"), 0775)                 //если не существует, создаем каталог "pki"
 	err = os.MkdirAll(path.Join(dirPath, "assets"), 0775)              //если не существует, создаем каталог "Assets"
 	err = os.MkdirAll(path.Join(dirPath, "assets", "templates"), 0775) //если не существует, создаем каталог "Templates"
 	err = os.MkdirAll(path.Join(dirPath, "assets", "css"), 0775)       //если не существует, создаем каталог "CSS"
