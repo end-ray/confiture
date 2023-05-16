@@ -17,6 +17,8 @@ type Config struct {
 type Server struct {
 	Address string `yaml:"address"`
 	Port    string `yaml:"port"`
+	TLScert string `yaml:"tls_cert"`
+	TLSkey  string `yaml:"tls_key"`
 	Assets  string `yaml:"assets"`
 }
 
