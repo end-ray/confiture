@@ -35,7 +35,7 @@ type Sqlite struct {
 
 func initConfig(dirPath string) {
 	Write(newConfig(dirPath))
-	Read(dirPath)
+	Read(&dirPath)
 }
 
 func newConfig(dirPath string) *Config {
@@ -69,18 +69,18 @@ func Write(config *Config) {
 	}
 }
 
-func Read(dirPath string) *Config {
+func Read(dirPath *string) Config {
 	var config Config
 
-	configData, err := os.ReadFile(path.Join(dirPath, configFile))
+	configData, err := os.ReadFile(path.Join(*dirPath, configFile))
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// parse the YAML stored in the byte slice into the struct
-	err = yaml.Unmarshal(configData, &config)
+	err = yaml.Unmarshal(configData, config)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return &config
+	return config
 }
