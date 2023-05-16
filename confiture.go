@@ -22,6 +22,7 @@ func InitConfiture(targetName string) string {
 
 	initStructure(dirPath, exeName, targetName)
 	initConfig(dirPath)
+	initCertificate(Read(&dirPath), &targetName)
 
 	return dirPath
 }
