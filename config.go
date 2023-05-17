@@ -66,7 +66,7 @@ func Write(config *Config) {
 		panic(err)
 	}
 
-	err = os.WriteFile(path.Join(config.Home, configFile), data, 0660)
+	err = os.WriteFile(path.Join(config.Home, "conf", configFile), data, 0660)
 	if err != nil {
 		panic(err)
 	}
@@ -74,7 +74,7 @@ func Write(config *Config) {
 
 func Read(dirPath string) Config {
 	var config Config
-	confPath := path.Join(dirPath, configFile)
+	confPath := path.Join(dirPath, "conf", configFile)
 
 	configData, err := os.ReadFile(confPath)
 	if err != nil {

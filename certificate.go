@@ -5,7 +5,6 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"crypto/x509/pkix"
-	"encoding/base64"
 	"encoding/pem"
 	"math/big"
 	"net"
@@ -70,14 +69,4 @@ func createTLSCert(certPath string, keyPath string, targetName *string) {
 	}
 
 	privateKeyFile.Close()
-
-	// выводим кодированный сертификат и приватный ключ в консоль
-	certBytes, _ := os.ReadFile(certPath)
-	keyBytes, _ := os.ReadFile(keyPath)
-	certBase64 := base64.StdEncoding.EncodeToString(certBytes)
-	keyBase64 := base64.StdEncoding.EncodeToString(keyBytes)
-	println("CERTIFICATE:")
-	println(certBase64)
-	println("PRIVATE KEY:")
-	println(keyBase64)
 }
