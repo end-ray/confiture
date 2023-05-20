@@ -6,6 +6,7 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/pem"
+	"log"
 	"math/big"
 	"net"
 	"os"
@@ -49,13 +50,18 @@ func createTLSCert(certPath string, keyPath string, targetName *string) {
 	if err != nil {
 		panic(err)
 	}
+	//defer certFile.Close()
+	defer func() {
+		err := certFile.Close()
+		if err != nil {
+			log.Printf("Error closing cert file: %v", err)
+		}
+	}()
 
 	err = pem.Encode(certFile, &pem.Block{Type: "CERTIFICATE", Bytes: derBytes})
 	if err != nil {
 		panic(err)
 	}
-
-	certFile.Close()
 
 	// кодируем приватный ключ в PEM формат
 	privateKeyFile, err := os.Create(keyPath)
@@ -63,10 +69,17 @@ func createTLSCert(certPath string, keyPath string, targetName *string) {
 		panic(err)
 	}
 
+	//defer privateKeyFile.Close()
+	defer func() {
+		err := privateKeyFile.Close()
+		if err != nil {
+			log.Printf("Error closing cert file: %v", err)
+		}
+	}()
+
 	err = pem.Encode(privateKeyFile, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(privateKey)})
 	if err != nil {
 		panic(err)
 	}
 
-	privateKeyFile.Close()
 }

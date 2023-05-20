@@ -44,7 +44,7 @@ func newConfig(dirPath string) *Config {
 
 	config.Home = dirPath
 
-	config.Server.Address = "0.0.0.0"
+	config.Server.Address = "127.0.0.1"
 	config.Server.Port = "8443"
 	config.Server.TLScert = path.Join(dirPath, "pki", "self-signed_cert.pem")
 	config.Server.TLSkey = path.Join(dirPath, "pki", "self-signed_key.pem")
