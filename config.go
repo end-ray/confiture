@@ -35,7 +35,12 @@ type Sqlite struct {
 }
 
 func initConfig(dirPath string) {
-	Write(newConfig(dirPath))
+	if _, err := os.Stat(path.Join(dirPath, "conf", configFile)); os.IsNotExist(err) {
+		Write(newConfig(dirPath))
+	} else {
+		fmt.Println("File exists!")
+	}
+
 	Read(dirPath)
 }
 
