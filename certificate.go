@@ -8,7 +8,6 @@ import (
 	"encoding/pem"
 	"log"
 	"math/big"
-	"net"
 	"os"
 	"time"
 )
@@ -36,7 +35,6 @@ func createTLSCert(certPath string, keyPath string, targetName *string) {
 		NotAfter:     time.Now().AddDate(10, 0, 0),
 		KeyUsage:     x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
 		ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
-		IPAddresses:  []net.IP{net.ParseIP("127.0.0.1")},
 	}
 
 	// Создать самоподписанный сертификат
