@@ -27,10 +27,16 @@ func createTLSCert(certPath string, keyPath string, targetName *string) {
 		panic(err)
 	}
 
+	// Заполняем данные о владельце сертификата
+	subject := pkix.Name{
+		CommonName:   *targetName,
+		Organization: []string{"Self-Signed Inc."},
+	}
+
 	// Подготовить основные сведения самоподписного сертификата
 	template := x509.Certificate{
 		SerialNumber: big.NewInt(1),
-		Subject:      pkix.Name{CommonName: *targetName},
+		Subject:      subject,
 		NotBefore:    time.Now(),
 		NotAfter:     time.Now().AddDate(10, 0, 0),
 		KeyUsage:     x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
