@@ -17,6 +17,7 @@ func InitConfiture(targetName string) string {
 	//Проверка находится ли исполняемый файл в каталоге bin
 	dirName := filepath.Base(dirPath)
 	if dirName == "bin" {
+		dirPath = filepath.Dir(dirPath) //получение пути без последнего каталога
 		return dirPath
 	}
 

@@ -6,9 +6,11 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/pem"
+	"fmt"
 	"log"
 	"math/big"
 	"os"
+	"path"
 	"time"
 )
 
@@ -16,8 +18,13 @@ func initCertificate(config Config, targetName *string) {
 
 	certPath := config.Server.TLScert
 	keyPath := config.Server.TLSkey
+	dirHome := config.Home
 
-	createTLSCert(certPath, keyPath, targetName)
+	if _, err := os.Stat(path.Join(dirHome, "pki", "self-signed_cert.pem")); os.IsNotExist(err) {
+		createTLSCert(certPath, keyPath, targetName)
+	} else {
+		fmt.Println("File exists!")
+	}
 }
 
 func createTLSCert(certPath string, keyPath string, targetName *string) {
@@ -85,5 +92,4 @@ func createTLSCert(certPath string, keyPath string, targetName *string) {
 	if err != nil {
 		panic(err)
 	}
-
 }
