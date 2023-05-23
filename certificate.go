@@ -27,6 +27,20 @@ func initCertificate(config Config, targetName *string) {
 	}
 }
 
+func genSerialNumber() *big.Int {
+	// Определяем границы диапазона
+	min := big.NewInt(1)
+	max := new(big.Int).Exp(big.NewInt(2), big.NewInt(160), nil)
+
+	// Генерируем случайное число в указанном диапазоне
+	randNum, _ := rand.Int(rand.Reader, new(big.Int).Sub(max, min))
+	randNum.Add(randNum, min)
+
+	// Выводим результат
+	fmt.Println(randNum)
+	return randNum
+}
+
 func createTLSCert(certPath string, keyPath string, targetName *string) {
 	// Генерировать закрытый ключ RSA 2048 бита
 	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
@@ -42,7 +56,7 @@ func createTLSCert(certPath string, keyPath string, targetName *string) {
 
 	// Подготовить основные сведения самоподписного сертификата
 	template := x509.Certificate{
-		SerialNumber: big.NewInt(1),
+		SerialNumber: genSerialNumber(),
 		Subject:      subject,
 		NotBefore:    time.Now(),
 		NotAfter:     time.Now().AddDate(10, 0, 0),
