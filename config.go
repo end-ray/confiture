@@ -30,7 +30,6 @@ type AlertLog struct {
 
 type Sqlite struct {
 	DbDriver string `yaml:"dbDriver"`
-	DbPatch  string `yaml:"dbPatch"`
 	DbFile   string `yaml:"dbFile"`
 }
 
@@ -59,8 +58,7 @@ func newConfig(dirPath string) *Config {
 	config.Log.LogLevel = 4
 
 	config.Sqlite.DbDriver = "sqlite3"
-	config.Sqlite.DbPatch = "$home"
-	config.Sqlite.DbFile = "storage.db"
+	config.Sqlite.DbFile = path.Join(dirPath, "bin", "storage.db")
 
 	return &config
 }

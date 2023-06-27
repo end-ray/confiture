@@ -10,6 +10,7 @@ import (
 func initStructure(dirPath string, exeName string, targetName string) {
 	createStructure(dirPath)
 	moveExeFile(dirPath, exeName, targetName)
+	creatDbFile(dirPath)
 }
 
 func createStructure(dirPath string) {
@@ -36,4 +37,13 @@ func moveExeFile(dirPath string, exeName string, targetName string) {
 	if err != nil {
 		fmt.Println("Ошибка перемещения файла:", err)
 	}
+}
+
+func creatDbFile(dirPath string) {
+	// Создать или открыть файл базы данных
+	dbFile, err := os.Create(path.Join(dirPath, "bin", "example.db"))
+	if err != nil {
+		panic(err)
+	}
+	defer dbFile.Close()
 }
