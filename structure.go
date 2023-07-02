@@ -40,10 +40,19 @@ func moveExeFile(dirPath string, exeName string, targetName string) {
 }
 
 func creatDbFile(dirPath string) {
-	// Создать или открыть файл базы данных
-	dbFile, err := os.Create(path.Join(dirPath, "bin", "storage.db"))
-	if err != nil {
-		panic(err)
+
+	filePath := path.Join(dirPath, "bin", "storage.db")
+
+	// Проверяем наличие файла
+	_, err := os.Stat(filePath)
+
+	if os.IsNotExist(err) {
+		// Создать или открыть файл базы данных
+		dbFile, err := os.Create(filePath)
+		if err != nil {
+			panic(err)
+		}
+		defer dbFile.Close()
 	}
-	defer dbFile.Close()
+
 }
