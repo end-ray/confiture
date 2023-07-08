@@ -20,7 +20,6 @@ type Server struct {
 	Port    string `yaml:"port"`
 	TLScert string `yaml:"tls_cert"`
 	TLSkey  string `yaml:"tls_key"`
-	Assets  string `yaml:"assets"`
 }
 
 type AlertLog struct {
@@ -52,7 +51,6 @@ func newConfig(dirPath string) *Config {
 	config.Server.Port = "8443"
 	config.Server.TLScert = path.Join(dirPath, "pki", "self-signed_cert.pem")
 	config.Server.TLSkey = path.Join(dirPath, "pki", "self-signed_key.pem")
-	config.Server.Assets = path.Join("$home", "assets")
 
 	config.Log.LogPath = path.Join("$home", "log", alertLog) //назначаем переменной значение
 	config.Log.LogLevel = 4
