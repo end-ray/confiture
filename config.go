@@ -114,7 +114,7 @@ func ipnet() string {
 			for _, addr := range addrs {
 				// Проверяем, является ли адрес IP-адресом
 				if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() && ipnet.IP.To4() != nil {
-					return string(ipnet.IP)
+					return ipnet.IP.String()
 				}
 			}
 		}
