@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gopkg.in/yaml.v3"
 	"log"
+	"net"
 	"os"
 	"path"
 )
@@ -47,12 +48,12 @@ func newConfig(dirPath string) *Config {
 
 	config.Home = dirPath
 
-	config.Server.Address = "127.0.0.1"
+	config.Server.Address = ipnet()
 	config.Server.Port = "8443"
 	config.Server.TLScert = path.Join(dirPath, "pki", "self-signed_cert.pem")
 	config.Server.TLSkey = path.Join(dirPath, "pki", "self-signed_key.pem")
 
-	config.Log.LogPath = path.Join("$home", "log", alertLog) //назначаем переменной значение
+	config.Log.LogPath = path.Join(dirPath, "log", alertLog) //назначаем переменной значение
 	config.Log.LogLevel = 4
 
 	config.Sqlite.DbDriver = "sqlite3"
@@ -88,4 +89,35 @@ func Read(dirPath string) Config {
 		panic(fmt.Errorf("failed to unmarshal config data: %w", err))
 	}
 	return config
+}
+
+func ipnet() string {
+
+	// Получаем список всех сетевых интерфейсов
+	interfaces, err := net.Interfaces()
+	if err != nil {
+		fmt.Println("Не удалось получить список сетевых интерфейсов:", err)
+		return "Не удалось получить список сетевых интерфейсов"
+	}
+	// Проходимся по каждому интерфейсу
+	for _, iface := range interfaces {
+		// Проверяем, что интерфейс активен и не является петлевым
+		if iface.Flags&net.FlagUp != 0 && iface.Flags&net.FlagLoopback == 0 {
+			// Получаем список адресов для текущего интерфейса
+			addrs, err := iface.Addrs()
+			if err != nil {
+				fmt.Println("Не удалось получить адреса для интерфейса", iface.Name, ":", err)
+				continue
+			}
+
+			// Проходимся по каждому адресу
+			for _, addr := range addrs {
+				// Проверяем, является ли адрес IP-адресом
+				if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() && ipnet.IP.To4() != nil {
+					return string(ipnet.IP)
+				}
+			}
+		}
+	}
+	return "нет IPv4-адресов"
 }
