@@ -14,6 +14,7 @@ type Config struct {
 	Server Server   `yaml:"server"`
 	Log    AlertLog `yaml:"AlertLog"`
 	Sqlite Sqlite   `yaml:"SQLite"`
+	Pgsql  Pgsql    `yaml:"PostgreSQL"`
 }
 
 type Server struct {
@@ -29,8 +30,15 @@ type AlertLog struct {
 }
 
 type Sqlite struct {
-	DbDriver string `yaml:"dbDriver"`
-	DbFile   string `yaml:"dbFile"`
+	DbFile string `yaml:"dbFile"`
+}
+
+type Pgsql struct {
+	Host   string `yaml:"host"`
+	Port   string `yaml:"port"`
+	DbName string `yaml:"dbname"`
+	User   string `yaml:"user"`
+	Passwd string `yaml:"passwd"`
 }
 
 func initConfig(dirPath string) {
@@ -56,8 +64,13 @@ func newConfig(dirPath string) *Config {
 	config.Log.LogPath = path.Join(dirPath, "log", alertLog) //назначаем переменной значение
 	config.Log.LogLevel = 4
 
-	config.Sqlite.DbDriver = "sqlite3"
 	config.Sqlite.DbFile = path.Join(dirPath, "bin", "storage.db")
+
+	config.Pgsql.Host = "localhost"
+	config.Pgsql.Port = "5432"
+	config.Pgsql.DbName = ""
+	config.Pgsql.User = ""
+	config.Pgsql.Passwd = ""
 
 	return &config
 }
