@@ -35,7 +35,7 @@ type Sqlite struct {
 
 type Pgsql struct {
 	Host   string `yaml:"host"`
-	Port   string `yaml:"port"`
+	Port   uint16 `yaml:"port"`
 	DbName string `yaml:"dbname"`
 	User   string `yaml:"user"`
 	Passwd string `yaml:"passwd"`
@@ -67,7 +67,7 @@ func newConfig(dirPath string) *Config {
 	config.Sqlite.DbFile = path.Join(dirPath, "bin", "storage.db")
 
 	config.Pgsql.Host = "localhost"
-	config.Pgsql.Port = "5432"
+	config.Pgsql.Port = 5432
 	config.Pgsql.DbName = ""
 	config.Pgsql.User = ""
 	config.Pgsql.Passwd = ""
